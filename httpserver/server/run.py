@@ -32,6 +32,12 @@ def get_response(request):
 	""" #Тело ответа в html
 	code = 200 #HTTP код ответа
 	status = "OK"
+	if method != "GET": #Если метод не GET
+		code = 405
+		status = "Method Not Allowed"
+		body = += "Method Not Allowed"
+		body += "\n</body>\n</html>"
+		return protocol, code, status, body
 	if url == "/":
 		body += "<h3>Hello mister!</h3>" \
 				+ "<p>You are: " + header["User-Agent"] + "</p>"
