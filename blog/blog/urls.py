@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from core.views import *;
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^post/all/$', show_post_all),
+    url(r'^post/(?P<post_id>\d+)/$', show_post_id),
+    url(r'^user/all/$', show_user_all),
+    url(r'^user/(?P<user_id>\d+)/$', show_user_id)
 ]
