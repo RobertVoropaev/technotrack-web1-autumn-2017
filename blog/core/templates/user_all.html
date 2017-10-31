@@ -1,1 +1,15 @@
-<h1>Все пользователи</h1>
+{% extends "base.html" %}
+
+{% block content_name %}
+    <h3>Все пользователи</h3>
+{% endblock %}
+
+{% block content %}
+    <ul>
+        <p>Количество пользователей: {{users.count}}</p>
+    {% for user in users %}
+        <a href="{%url "user_id" user_id=user.id %}"><li>{{user.id}} | {{user.email}}</li></a>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

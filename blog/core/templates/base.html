@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Блог</title>
+</head>
+<body>
+    {% block main_title %}
+    <a href="{% url "main_page" %}"> <h1>Blog</h1> </a>
+    {% endblock %}
+
+    {% block main_menu %}
+        <h2>Меню</h2>
+        <ul>
+            <li><a href="{% url "user_all" %}"> Все пользователи </a></li>
+            <li><a href="{% url "post_all" %}"> Все посты </a></li>
+        </ul>
+    {% endblock %}
+
+    {% block content_name %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block main_footer %}
+        <footer>Robert Voropaev, 2017</footer>
+    {% endblock %}
+</body>
+</html>

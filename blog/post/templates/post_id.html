@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content_name %}
+    <h3>Пост №{{post.id}}</h3>
+{% endblock %}
+
+{% block content %}
+    <ul>
+        <li>id: {{post.id}}</li>
+        <li>title: {{post.title}}</li>
+        <li>text: {{post.text}}</li>
+    </ul>
+{% endblock %}
+
+

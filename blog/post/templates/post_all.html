@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content_name %}
+    <h3>Все посты</h3>
+{% endblock %}
+
+{% block content %}
+    <ul>
+        <p>Количество постов: {{posts.count}}</p>
+    {% for post in posts %}
+        <a href="{%url "post_id" post_id=post.id %}"><li>{{post.id}} | {{post.title}}</li></a>
+    {% endfor %}
+    </ul>
+{% endblock %}

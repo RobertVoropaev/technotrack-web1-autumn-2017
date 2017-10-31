@@ -16,11 +16,16 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from core.views import *;
+from post.views import *;
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^post/all/$', show_post_all),
-    url(r'^post/(?P<post_id>\d+)/$', show_post_id),
-    url(r'^user/all/$', show_user_all),
-    url(r'^user/(?P<user_id>\d+)/$', show_user_id)
+    url(r'^$', show_main, name="main_page"),
+
+    url(r'^user/all/$', show_user_all, name="user_all"),
+    url(r'^user/(?P<user_id>\d+)/$', show_user_id, name="user_id"),
+
+    url(r'^post/all/$', show_post_all, name="post_all"),
+    url(r'^post/(?P<post_id>\d+)/$', show_post_id, name="post_id")
+
 ]

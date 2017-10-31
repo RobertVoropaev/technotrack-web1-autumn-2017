@@ -1,1 +1,21 @@
-<h1>Пользователь №{{user_id}}</h1>
+{% extends "base.html" %}
+
+{% block content_name %}
+    <h3>Пользователь №{{user.id}}</h3>
+{% endblock %}
+
+{% block content %}
+    <ul>
+        <li>id: {{user.id}}</li>
+        <li>password: {{user.password}}</li>
+        <li>last_login: {{user.last_login}}</li>
+        <li>is_superuser: {{user.is_superuser}}</li>
+        <li>username: {{user.username}}</li>
+        <li>first_name: {{user.first_name}}</li>
+        <li>last_name: {{user.last_name}}</li>
+        <li>email: {{user.email}}</li>
+        <li>is_staff: {{user.is_staff}}</li>
+        <li>is_active: {{user.is_active}}</li>
+        <li>date_joined: {{user.date_joined}}</li>
+    </ul>
+{% endblock %}
