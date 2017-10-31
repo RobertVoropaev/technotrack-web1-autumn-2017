@@ -6,9 +6,26 @@
 
 {% block content %}
     <ul>
+        <h4>Информация</h4>
         <li>id: {{post.id}}</li>
         <li>title: {{post.title}}</li>
         <li>text: {{post.text}}</li>
+        <li>author: {{post.author.username}}</li>
+        <li>date_create: {{post.date_create}}</li>
+        <li>last_update {{post.last_update}}</li>
+
+        <h4>Категории</h4>
+        {% for category in post.categories.all %}
+            <li>{{category.title}}</li>
+        {% endfor %}
+
+        <h4>Автор поста</h4>
+        <a href="{% url "user_id" user_id=post.author.id %}"> {{post.author.username}}</a>
+
+        <h4>Комментарии</h4>
+        {% for comment in post.comments.all %}
+            <li>{{comment.author.username}} | {{comment.date_create}} | {{comment.text}}</li>
+        {% endfor %}
     </ul>
 {% endblock %}
 

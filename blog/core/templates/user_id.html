@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+    <h4>Информация</h4>
     <ul>
         <li>id: {{user.id}}</li>
         <li>password: {{user.password}}</li>
@@ -18,4 +19,15 @@
         <li>is_active: {{user.is_active}}</li>
         <li>date_joined: {{user.date_joined}}</li>
     </ul>
+
+    <h4>Посты пользователя</h4>
+    {% for post in user.posts.all %}
+        <a href="{%url "post_id" post_id=post.id %}"><li>{{post.id}} | {{post.title}}</li></a>
+    {% endfor %}
+
+    <h4>Комментарии</h4>
+    {% for comment in user.comments.all %}
+        <li>{{comment.post.title}} | {{comment.date_create}} | {{comment.text}}</li>
+    {% endfor %}
+
 {% endblock %}

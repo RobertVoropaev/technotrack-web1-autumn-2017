@@ -6,6 +6,7 @@
 <body>
     {% block main_title %}
     <a href="{% url "main_page" %}"> <h1>Blog</h1> </a>
+    <hr>
     {% endblock %}
 
     {% block main_menu %}
@@ -13,7 +14,9 @@
         <ul>
             <li><a href="{% url "user_all" %}"> Все пользователи </a></li>
             <li><a href="{% url "post_all" %}"> Все посты </a></li>
+            <li><a href="{% url "category_all" %}"> Все категории </a></li>
         </ul>
+    <hr>
     {% endblock %}
 
     {% block content_name %}
@@ -23,6 +26,7 @@
     {% endblock %}
 
     {% block main_footer %}
+        <hr>
         <footer>Robert Voropaev, 2017</footer>
     {% endblock %}
 </body>

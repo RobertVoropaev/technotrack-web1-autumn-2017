@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from core.views import *;
 from post.views import *;
+from category.views import *;
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,6 +27,9 @@ urlpatterns = [
     url(r'^user/(?P<user_id>\d+)/$', show_user_id, name="user_id"),
 
     url(r'^post/all/$', show_post_all, name="post_all"),
-    url(r'^post/(?P<post_id>\d+)/$', show_post_id, name="post_id")
+    url(r'^post/(?P<post_id>\d+)/$', show_post_id, name="post_id"),
+
+    url(r'^category/all/$', show_category_all, name="category_all"),
+    url(r'^category/(?P<category_id>\d+)/$', show_category_id, name="category_id"),
 
 ]
