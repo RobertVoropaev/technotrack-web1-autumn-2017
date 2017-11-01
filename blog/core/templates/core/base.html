@@ -11,11 +11,9 @@
 
     {% block main_menu %}
         <h2>Меню</h2>
-        <ul>
-            <li><a href="{% url "user_all" %}"> Все пользователи </a></li>
-            <li><a href="{% url "post_all" %}"> Все посты </a></li>
-            <li><a href="{% url "category_all" %}"> Все категории </a></li>
-        </ul>
+            <a href="{% url "user_all" %}"> Все пользователи</a> |
+            <a href="{% url "post_all" %}"> Все посты</a> |
+            <a href="{% url "category_all" %}"> Все категории</a> |
     <hr>
     {% endblock %}
 

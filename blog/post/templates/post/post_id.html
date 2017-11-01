@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "core/base.html" %}
 
 {% block content_name %}
     <h3>Пост №{{post.id}}</h3>
 {% endblock %}
 
 {% block content %}
-    <ul>
+    <a>
         <h4>Информация</h4>
         <li>id: {{post.id}}</li>
         <li>title: {{post.title}}</li>
@@ -15,18 +15,22 @@
         <li>last_update {{post.last_update}}</li>
 
         <h4>Категории</h4>
+        <ul>
         {% for category in post.categories.all %}
-            <li>{{category.title}}</li>
+            <a href="{%url "category_id" category_id=category.id %}"> <li>{{category.title}}</li></a>
         {% endfor %}
+        </ul>
 
-        <h4>Автор поста</h4>
+        <h4>Автор</h4>
         <a href="{% url "user_id" user_id=post.author.id %}"> {{post.author.username}}</a>
 
         <h4>Комментарии</h4>
+        <ul>
         {% for comment in post.comments.all %}
-            <li>{{comment.author.username}} | {{comment.date_create}} | {{comment.text}}</li>
+            <a href="{%url "user_id" user_id=comment.author.id %}"><li>{{comment.author.username}}</a> | {{comment.date_create}}
+            <br> {{comment.text}}</li>
         {% endfor %}
-    </ul>
+        </ul>
 {% endblock %}
 
 

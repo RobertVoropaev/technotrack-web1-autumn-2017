@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "core/base.html" %}
 
 {% block content_name %}
     <h3>Пользователь №{{user.id}}</h3>
@@ -20,14 +20,18 @@
         <li>date_joined: {{user.date_joined}}</li>
     </ul>
 
-    <h4>Посты пользователя</h4>
+    <h4>Посты</h4>
+    <ul>
     {% for post in user.posts.all %}
-        <a href="{%url "post_id" post_id=post.id %}"><li>{{post.id}} | {{post.title}}</li></a>
+        <a href="{%url "post_id" post_id=post.id %}"><li>{{post.title}}</li></a>
     {% endfor %}
+    </ul>
 
     <h4>Комментарии</h4>
+    <ul>
     {% for comment in user.comments.all %}
-        <li>{{comment.post.title}} | {{comment.date_create}} | {{comment.text}}</li>
+        <li><a href="{%url "post_id" post_id=comment.author.id %}">{{comment.post.title}} </a>| {{comment.date_create}}
+            <br> {{comment.text}}</li>
     {% endfor %}
-
+    </ul>
 {% endblock %}

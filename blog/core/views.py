@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render, get_object_or_404
+
+from django.contrib.auth import get_user_model
 from core.models import *;
+from django.views.generic import ListView, TemplateView, DetailView
 
-def show_main(request):
-    return render(request, "base.html")
+class MainTemplate(TemplateView):
+    template_name = "core/base.html"
 
-def show_user_all(request):
-    return render(request, "user_all.html", {"users": User.objects.all()})
+class UserList(ListView):
+    template_name = "core/user_all.html"
+    model = get_user_model() # settings.AUTH_USER_MODEL
 
-def show_user_id(request, user_id):
-    user = get_object_or_404(User.objects.all(), id=user_id)
-    return render(request, "user_id.html", {"user": user})
-
-
+class UserDetail(DetailView):
+    model = get_user_model()
+    template_name = "core/user_id.html"
+    pk_url_kwarg = 'user_id'

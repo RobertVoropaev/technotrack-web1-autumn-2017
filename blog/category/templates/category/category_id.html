@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "core/base.html" %}
 
 {% block content_name %}
-    <h3>Пользователь №{{user.id}}</h3>
+    <h3>Категория №{{category.id}}</h3>
 {% endblock %}
 
 {% block content %}
@@ -12,8 +12,9 @@
     </ul>
 
     <h4>Посты из категории</h4>
+    <ul>
     {% for post in category.posts.all %}
-        <a href="{%url "post_id" post_id=post.id %}"><li>{{post.id}} | {{post.title}}</li></a>
+        <a href="{%url "post_id" post_id=post.id %}"><li> {{post.title}}</li></a>
     {% endfor %}
-
+    </ul>
 {% endblock %}
