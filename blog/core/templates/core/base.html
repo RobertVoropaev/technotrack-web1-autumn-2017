@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Блог</title>
+    <title>Blog</title>
 </head>
 <body>
     {% block main_title %}
-    <a href="{% url "main_page" %}"> <h1>Blog</h1> </a>
+    <h1>Blog</h1>
     <hr>
     {% endblock %}
 
     {% block main_menu %}
-        <h2>Меню</h2>
-            <a href="{% url "user_all" %}"> Все пользователи</a> |
-            <a href="{% url "post_all" %}"> Все посты</a> |
-            <a href="{% url "category_all" %}"> Все категории</a> |
-    <hr>
+        <h2>Menu</h2>
+            <a href="{% url "main_page" %}"> Main</a> |
+            <a href="{% url "user_all" %}"> All users</a> |
+            <a href="{% url "post_all" %}"> All posts</a> |
+            <a href="{% url "category_all" %}"> All categoryes</a> |
+        <hr>
     {% endblock %}
 
     {% block content_name %}

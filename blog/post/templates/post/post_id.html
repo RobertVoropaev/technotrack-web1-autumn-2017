@@ -1,32 +1,32 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h3>Пост №{{post.id}}</h3>
+    <h3>Post №{{object.id}}</h3>
 {% endblock %}
 
 {% block content %}
     <a>
-        <h4>Информация</h4>
-        <li>id: {{post.id}}</li>
-        <li>title: {{post.title}}</li>
-        <li>text: {{post.text}}</li>
-        <li>author: {{post.author.username}}</li>
-        <li>date_create: {{post.date_create}}</li>
-        <li>last_update {{post.last_update}}</li>
+        <h4>Information</h4>
+        <li>id: {{object.id}}</li>
+        <li>title: {{object.title}}</li>
+        <li>text: {{object.text}}</li>
+        <li>author: {{object.author.username}}</li>
+        <li>date_create: {{object.date_create}}</li>
+        <li>last_update {{object.last_update}}</li>
 
-        <h4>Категории</h4>
+        <h4>{{object.categories.count}} categoryes</h4>
         <ul>
-        {% for category in post.categories.all %}
+        {% for category in object.categories.all %}
             <a href="{%url "category_id" category_id=category.id %}"> <li>{{category.title}}</li></a>
         {% endfor %}
         </ul>
 
-        <h4>Автор</h4>
-        <a href="{% url "user_id" user_id=post.author.id %}"> {{post.author.username}}</a>
+        <h4>Author</h4>
+        <a href="{% url "user_id" user_id=object.author.id %}"> {{object.author.username}}</a>
 
-        <h4>Комментарии</h4>
+        <h4>{{object.comments.count}} comments</h4>
         <ul>
-        {% for comment in post.comments.all %}
+        {% for comment in object.comments.all %}
             <a href="{%url "user_id" user_id=comment.author.id %}"><li>{{comment.author.username}}</a> | {{comment.date_create}}
             <br> {{comment.text}}</li>
         {% endfor %}

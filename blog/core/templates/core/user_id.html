@@ -1,35 +1,35 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h3>Пользователь №{{user.id}}</h3>
+    <h3>User №{{object.id}}</h3>
 {% endblock %}
 
 {% block content %}
-    <h4>Информация</h4>
+    <h4>Information</h4>
     <ul>
-        <li>id: {{user.id}}</li>
-        <li>password: {{user.password}}</li>
-        <li>last_login: {{user.last_login}}</li>
-        <li>is_superuser: {{user.is_superuser}}</li>
-        <li>username: {{user.username}}</li>
-        <li>first_name: {{user.first_name}}</li>
-        <li>last_name: {{user.last_name}}</li>
-        <li>email: {{user.email}}</li>
-        <li>is_staff: {{user.is_staff}}</li>
-        <li>is_active: {{user.is_active}}</li>
-        <li>date_joined: {{user.date_joined}}</li>
+        <li>id: {{object.id}}</li>
+        <li>password: {{object.password}}</li>
+        <li>last_login: {{object.last_login}}</li>
+        <li>is_superuser: {{object.is_superuser}}</li>
+        <li>username: {{object.username}}</li>
+        <li>first_name: {{object.first_name}}</li>
+        <li>last_name: {{object.last_name}}</li>
+        <li>email: {{object.email}}</li>
+        <li>is_staff: {{object.is_staff}}</li>
+        <li>is_active: {{object.is_active}}</li>
+        <li>date_joined: {{object.date_joined}}</li>
     </ul>
 
-    <h4>Посты</h4>
+    <h4>{{object.posts.count}} posts</h4>
     <ul>
-    {% for post in user.posts.all %}
+    {% for post in object.posts.all %}
         <a href="{%url "post_id" post_id=post.id %}"><li>{{post.title}}</li></a>
     {% endfor %}
     </ul>
 
-    <h4>Комментарии</h4>
+    <h4>{{object.comments.count}} comments</h4>
     <ul>
-    {% for comment in user.comments.all %}
+    {% for comment in object.comments.all %}
         <li><a href="{%url "post_id" post_id=comment.author.id %}">{{comment.post.title}} </a>| {{comment.date_create}}
             <br> {{comment.text}}</li>
     {% endfor %}

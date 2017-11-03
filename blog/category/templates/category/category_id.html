@@ -1,19 +1,19 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h3>Категория №{{category.id}}</h3>
+    <h3>Category №{{object.id}}</h3>
 {% endblock %}
 
 {% block content %}
-    <h4>Информация</h4>
+    <h4>Information</h4>
     <ul>
-        <li>id: {{category.id}}</li>
-        <li>title: {{category.title}}</li>
+        <li>id: {{object.id}}</li>
+        <li>title: {{object.title}}</li>
     </ul>
 
-    <h4>Посты из категории</h4>
+    <h4>{{object.posts.count}} posts with this category</h4>
     <ul>
-    {% for post in category.posts.all %}
+    {% for post in object.posts.all %}
         <a href="{%url "post_id" post_id=post.id %}"><li> {{post.title}}</li></a>
     {% endfor %}
     </ul>

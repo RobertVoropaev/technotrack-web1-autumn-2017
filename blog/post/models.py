@@ -11,6 +11,8 @@ class Post(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField(Category, related_name="posts")
+    class Meta:
+        ordering = ["-date_create"]
 
 
 class Comment(models.Model):
