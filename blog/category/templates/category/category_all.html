@@ -1,25 +1,22 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h3>All categories</h3>
+    <h2>All categories</h2>
 {% endblock %}
 
 {% block content %}
-    <form action="" method="GET">
-        {{ CategoryListForm.search }}
-        <input type="submit" value="Search">
-    </form>
-    <form action="" method="GET">
-        {{ CategoryListForm.order_by }}
-        <input type="submit" value="Sort">
-    </form>
-    <ul>
-        <p>Number of categories: {{object_list.count}}</p>
-        {% for category in object_list %}
-        <a href="{%url "category_id" category_id=category.id %}"><li>{{category.title}}</a>
-        ({{category.posts.count}} posts)
-        </li>
-    {% endfor %}
-    </ul>
+        <form action="" method="GET">
+            {{ CategoryListForm }}
+            <input type="submit" value="Search">
+        </form>
+    <hr>
+        <a href="{% url "category_create" %}"> Create category </a>
+        <ul>
+        <p>Number of categories: {{categories.count}}</p>
+        {% for category in categories %}
+            <li><a href="{%url "category_detail" category_id=category.id %}">{{category.title}}</a>
+            ({{category.posts.count}} posts)</li>
+        {% endfor %}
+        </ul>
 {% endblock %}
 

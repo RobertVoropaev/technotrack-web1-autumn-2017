@@ -1,26 +1,31 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h3>Main page</h3>
+    <h2>Main page</h2>
 {% endblock %}
 
 {% block content %}
-    <h4>Top 3 posts</h4>
-    {% for post in PostList %}
-        <a href="{%url "post_id" post_id=post.id %}"><li>{{post.title}} </a>
-        <br>({{post.author.username}} | {{post.date_create}} | {{post.comments.count}} comments)
-        </li>
-    {% endfor %}
-    <h4>Top 3 users</h4>
-    {% for user in UserList %}
-        <a href="{%url "user_id" user_id=user.id %}"><li> {{user.username}}</a>
-        (Posts: {{user.posts.count}} | Comments: {{user.comments.count}})
-        </li>
-    {% endfor %}
-    <h4>Top 3 categories</h4>
-    {% for category in CategoryList %}
-        <a href="{%url "category_id" category_id=category.id %}"><li>{{category.title}}</a>
-        ({{category.posts.count}} posts)
-        </li>
-    {% endfor %}
+        <h4>Last 3 posts</h4>
+        <ul>
+        {% for post in PostList %}
+            <li><a href="{%url "post_detail" post_id=post.id %}">{{post.title}} </a>
+            ({{post.author.username}} | {{post.date_created}} | {{post.comments.count}} comments)</li>
+        {% endfor %}
+        </ul>
+    <hr>
+        <h4>Last 3 users</h4>
+        <ul>
+        {% for user in UserList %}
+            <li><a href="{%url "user_detail" user_id=user.id %}"> {{user.username}}</a>
+            (Posts: {{user.posts.count}} | Comments: {{user.comments.count}})</li>
+        {% endfor %}
+        </ul>
+    <hr>
+        <h4>Last 3 categories</h4>
+        <ul>
+        {% for category in CategoryList %}
+            <li><a href="{%url "category_detail" category_id=category.id %}">{{category.title}}</a>
+            ({{category.posts.count}} posts)</li>
+        {% endfor %}
+        </ul>
 {% endblock %}

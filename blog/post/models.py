@@ -1,23 +1,41 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from category.models import *;
-from django.conf import settings;
 
+from django.conf import settings
+from django.db import models
+
+from category.models import Category
 
 class Post(models.Model):
-    title = models.CharField(max_length=255, default="default_title")
-    text = models.TextField(default="default_text")
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name="posts") #Почему нельзя без Null
-    date_create = models.DateTimeField(auto_now_add=True)
-    last_update = models.DateTimeField(auto_now=True)
+    title = models.CharField(max_length=255)
+    text = models.TextField()
+
+    date_created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="posts",)
     categories = models.ManyToManyField(Category, related_name="posts")
+
+    def __str__(self):
+        return self.title
     class Meta:
-        ordering = ["-date_create"]
+        ordering = ['-date_created']
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
 
 
 class Comment(models.Model):
-    text = models.TextField(default="default_comment")
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name="comments")
-    post = models.ForeignKey(Post, null=True, related_name="comments")
-    date_create = models.DateTimeField(auto_now_add=True)
-    last_update = models.DateTimeField(auto_now=True)
+    text = models.TextField()
+
+    date_created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="comments")
+    post = models.ForeignKey(Post, related_name="comments")
+
+    def __str__(self):
+        return self.text
+    class Meta:
+        ordering = ['date_created']
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'

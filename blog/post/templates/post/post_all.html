@@ -1,25 +1,21 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h3>All posts</h3>
+    <h2>All posts</h2>
 {% endblock %}
 
 {% block content %}
-    <form>
-        {{ PostListForm.search }}
-        <input type="submit" value="Search">
-    </form>
-    <form>
-        {{ PostListForm.order_by }}
-        <input type="submit" value="Sort">
-    </form>
-
-    <ul>
-        <p>Number of posts: {{object_list.count}}</p>
-    {% for post in object_list %}
-        <a href="{%url "post_id" post_id=post.id %}"><li>{{post.title}} </a>
-        <br>({{post.author.username}} | {{post.date_create}} | {{post.comments.count}} comments)
-        </li>
-    {% endfor %}
+        <form>
+            {{ PostListForm }}
+            <input type="submit" value="Search">
+        </form>
+    <hr>
+        <a href="{% url "post_create" %}"> Create post </a>
+        <ul>
+        <p>Number of posts: {{posts.count}}</p>
+        {% for post in posts %}
+            <li><a href="{%url "post_detail" post_id=post.id %}">{{post.title}} </a>
+            ({{post.author.username}} | {{post.date_created}} | {{post.comments.count}} comments)</li>
+        {% endfor %}
     </ul>
 {% endblock %}

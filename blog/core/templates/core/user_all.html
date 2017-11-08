@@ -1,25 +1,21 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h3>All users</h3>
+    <h2>All users</h2>
 {% endblock %}
 
 {% block content %}
-    <form action="" method="GET">
-        {{ UserListForm.search }}
-        <input type="submit" value="Search">
-    </form>
-    <form action="" method="GET">
-        {{ UserListForm.order_by }}
-        <input type="submit" value="Sort">
-    </form>
-    <ul>
-        <p>Numbers of users: {{object_list.count}}</p>
-    {% for user in object_list %}
-        <a href="{%url "user_id" user_id=user.id %}"><li> {{user.username}}</a>
-        (Posts: {{user.posts.count}} | Comments: {{user.comments.count}})
-        </li>
-    {% endfor %}
-    </ul>
+        <form action="" method="GET">
+            {{ UserListGetForm }}
+            <input type="submit" value="Search">
+        </form>
+    <hr>
+        <ul>
+        <p>Numbers of users: {{users.count}}</p>
+        {% for user in users %}
+            <li><a href="{%url "user_detail" user_id=user.id %}">{{user.username}}</a>
+            (Posts: {{user.posts.count}} | Comments: {{user.comments.count}})</li>
+        {% endfor %}
+        </ul>
 {% endblock %}
 
