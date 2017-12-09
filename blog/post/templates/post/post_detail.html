@@ -17,6 +17,18 @@
                 <a href="{%url "category_detail" category_id=category.id %}">{{category.title}}</a>
             {% endfor %}
         <hr>
+            {% if user.is_authenticated %}
+            <h4>Create comments</h4>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{form}}
+                    <input type="submit" value="Create">
+                </form>
+            {% endif %}
+
+            {% if user.is_anonymous %}
+                <a href="{% url "login" %}"> Create comment</a>
+            {% endif %}
             <h4>{{post.comments.count}} comments</h4>
             <ul>
             {% for comment in post.comments.all %}

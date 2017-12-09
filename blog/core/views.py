@@ -9,6 +9,7 @@ from django.shortcuts import render, reverse
 from post.models import Post
 from category.models import Category
 
+
 def MainPageList(request):
     return render(request, 'core/main_page.html',
                   {'UserList': get_user_model().objects.order_by('-date_joined')[:3],
@@ -52,6 +53,7 @@ class UserList(ListView):
         context['UserListGetForm'] = self.form
         return context
 
+
 class UserCreate(CreateView):
     model = get_user_model()
     fields = ['username', 'first_name', 'last_name', 'email', 'password']
@@ -64,6 +66,7 @@ class UserCreate(CreateView):
         form.instance.set_password(form.instance.password)
         return super(UserCreate, self).form_valid(form)
 
+
 class UserUpdate(UpdateView):
     model = get_user_model()
     fields = ['username', 'first_name', 'last_name', 'email']
@@ -75,19 +78,3 @@ class UserUpdate(UpdateView):
 
     def get_queryset(self):
         return super(UserUpdate, self).get_queryset().filter(username=self.request.user.username)
-
-class UserChangePassword(UpdateView):
-    model = get_user_model()
-    fields = ['password']
-    template_name = 'core/user_change_password.html'
-    pk_url_kwarg = 'user_id'
-
-    def get_success_url(self):
-        return reverse('user_detail', kwargs={'user_id': self.object.id})
-
-    def form_valid(self, form):
-        form.instance.set_password(form.instance.password)
-        return super(UserChangePassword, self).form_valid(form)
-
-    def get_queryset(self):
-        return super(UserChangePassword, self).get_queryset().filter(username=self.request.user.username)

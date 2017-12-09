@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django import forms
-from django.shortcuts import reverse
+from django.shortcuts import reverse, get_object_or_404
 
-from post.models import Post;
+from post.models import Post, Comment;
 
 class PostListForm(forms.Form):
     search = forms.CharField(required=False)
@@ -19,8 +19,9 @@ class PostList(ListView):
     template_name = "post/post_all.html"
     model = Post
     context_object_name = 'posts'
+
     def get_queryset(self):
-        q = super(PostList, self).get_queryset()
+        q = super(PostList, self).get_queryset().filter(isDeleted=False)
         self.form = PostListForm(self.request.GET)
         if self.form.is_valid():
             if self.form.cleaned_data['order_by']:
@@ -30,17 +31,34 @@ class PostList(ListView):
         return q
 
     def get_context_data(self, **kwargs):
-        contex = super(PostList, self).get_context_data(**kwargs)
-        contex["PostListForm"] = self.form
-        return contex
+        context = super(PostList, self).get_context_data(**kwargs)
+        context["PostListForm"] = self.form
+        return context
 
 
 
-class PostDetail(DetailView):
-    template_name = "post/post_detail.html"
-    model = Post
-    pk_url_kwarg = "post_id"
-    context_object_name = 'post'
+class PostDetailAndCommentCreate(CreateView):
+    model = Comment
+    fields = ['text']
+    template_name = 'post/post_detail.html'
+    post_obj = Post.objects.all()[0]
+
+    def dispatch(self, request, *args, **kwargs):
+        self.post_obj = get_object_or_404(Post, id=kwargs['post_id'])
+        return super(PostDetailAndCommentCreate, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('post_detail', kwargs={'post_id': self.post_obj.id})
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post = self.post_obj
+        return super(PostDetailAndCommentCreate, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailAndCommentCreate, self).get_context_data(**kwargs)
+        context['post'] = self.post_obj
+        return context
 
 
 class PostCreate(CreateView):

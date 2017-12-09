@@ -16,8 +16,11 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="posts",)
     categories = models.ManyToManyField(Category, related_name="posts")
 
+    isDeleted = models.BooleanField(default=False);
+
     def __str__(self):
         return self.title
+
     class Meta:
         ordering = ['-date_created']
         verbose_name = 'Пост'
