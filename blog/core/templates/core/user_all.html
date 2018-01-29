@@ -1,21 +1,39 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h2>All users</h2>
+    <h1>All users</h1>
 {% endblock %}
 
 {% block content %}
-        <form action="" method="GET">
-            {{ UserListGetForm }}
-            <input type="submit" value="Search">
-        </form>
-    <hr>
-        <ul>
-        <p>Numbers of users: {{users.count}}</p>
+
+    <form action="" method="GET" class="form-inline">
+        {{ UserListGetForm.search }}
+        {{ UserListGetForm.order_by }}
+        <button class="btn btn-primary" type="submit"> Search </button>
+    </form>
+
+    <section>
         {% for user in users %}
-            <li><a href="{%url "user_detail" user_id=user.id %}">{{user.username}}</a>
-            (Posts: {{user.posts.count}} | Comments: {{user.comments.count}})</li>
+            <article class="jumbotron">
+                <h2>{{ user.username }}</h2>
+                <p class="lead">Posts: {{ user.posts.count }} Comments: {{ user.comments.count }}</p>
+                <a class="btn btn-primary" href="{% url "user_detail" user_id=user.id %}"> Detail</a>
+            </article>
         {% endfor %}
-        </ul>
+    </section>
+
+    <nav>
+        <form action="" method="GET">
+            {% if users.has_previous %}
+                <button name="page" value="{{ users.previous_page_number }}" class="btn btn-primary"> previos </button>
+            {% endif %}
+
+            <button type="button" class="btn btn-default">{{ users.number }}</button>
+
+            {% if users.has_next %}
+                <button name="page" value="{{ users.next_page_number }}" class="btn btn-primary"> next </button>
+            {% endif %}
+        </form>
+    </nav>
 {% endblock %}
 

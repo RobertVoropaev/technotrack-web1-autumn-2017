@@ -1,0 +1,18 @@
+.jumbotron{
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+ul .nav-item{
+    margin: 3px;
+}
+
+textarea{
+    height: 100px;
+    resize: none;
+}
+
+
+main{
+    margin-left: 0px;
+}

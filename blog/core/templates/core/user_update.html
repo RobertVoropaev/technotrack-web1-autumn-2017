@@ -1,13 +1,13 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h2>Update my profile</h2>
+    <h1>Update my profile</h1>
 {% endblock %}
 
 {% block content %}
     <form action="" method="POST">
         {% csrf_token %}
         {{form}}
-        <input type="submit" value="Update">
+        <button class="btn btn-primary" type="submit">Update</button>
     </form>
 {% endblock %}

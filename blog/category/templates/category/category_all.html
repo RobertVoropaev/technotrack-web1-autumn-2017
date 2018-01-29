@@ -1,22 +1,40 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h2>All categories</h2>
+    <h1>All categories</h1>
 {% endblock %}
 
 {% block content %}
+
+    <form action="" method="GET" class="form-inline">
+        {{ CategoryListForm.search }}
+        {{ CategoryListForm.order_by }}
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+    <section>
+            {% for category in categories %}
+                <article class="jumbotron">
+                    <h2>{{ category.title }}</h2>
+                    <p class="lead">Posts: {{ category.posts.count }}</p>
+                   <a class="btn btn-primary" href="{% url "category_detail" category_id=category.id %}"> Detail</a>
+                </article>
+            {% endfor %}
+    </section>
+
+    <nav>
         <form action="" method="GET">
-            {{ CategoryListForm }}
-            <input type="submit" value="Search">
+            {% if categories.has_previous %}
+                <button name="page" value="{{ categories.previous_page_number }}" class="btn btn-primary"> previos </button>
+            {% endif %}
+
+            <button type="button" class="btn btn-default">{{ categories.number }}</button>
+
+            {% if categories.has_next %}
+                <button name="page" value="{{ categories.next_page_number }}" class="btn btn-primary"> next </button>
+            {% endif %}
         </form>
-    <hr>
-        <a href="{% url "category_create" %}"> Create category </a>
-        <ul>
-        <p>Number of categories: {{categories.count}}</p>
-        {% for category in categories %}
-            <li><a href="{%url "category_detail" category_id=category.id %}">{{category.title}}</a>
-            ({{category.posts.count}} posts)</li>
-        {% endfor %}
-        </ul>
+    </nav>
+
 {% endblock %}
 

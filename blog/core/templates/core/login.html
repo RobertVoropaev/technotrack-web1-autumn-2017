@@ -1,13 +1,14 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h2>Login</h2>
+    <h1>Login</h1>
 {% endblock %}
 
 {% block content %}
+{#    Как добавить класс в LoginView?  #}
     <form action="" method="POST">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Login">
+        <button class="btn btn-primary" type="submit"> Login </button>
     </form>
 {% endblock %}

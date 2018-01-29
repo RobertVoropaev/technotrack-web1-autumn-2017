@@ -1,21 +1,40 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h2>All posts</h2>
+    <h1>All posts</h1>
 {% endblock %}
 
 {% block content %}
-        <form>
-            {{ PostListForm }}
-            <input type="submit" value="Search">
+
+    <form  action="" method="GET" class="form-inline">
+        {{ PostListForm.search }}
+        {{ PostListForm.order_by }}
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+    <section>
+            {% for post in posts %}
+            <article class="jumbotron">
+                <h2>{{ post.title }}</h2>
+                <p class="lead"> {{ post.text }}</p>
+                <a class="btn btn-primary" href="{% url "post_detail" post_id=post.id %}"> Read</a>
+            </article>
+            {% endfor %}
+    </section>
+
+    <nav>
+    {#Не понял, как при пагинации избежать сброса формы сверху#}
+        <form action="" method="GET">
+            {% if posts.has_previous %}
+                <button name="page" value="{{ posts.previous_page_number }}" class="btn btn-primary"> previos </button>
+            {% endif %}
+
+            <button type="button" class="btn btn-default">{{ posts.number }}</button>
+
+            {% if posts.has_next %}
+                <button name="page" value="{{ posts.next_page_number }}" class="btn btn-primary"> next </button>
+            {% endif %}
         </form>
-    <hr>
-        <a href="{% url "post_create" %}"> Create post </a>
-        <ul>
-        <p>Number of posts: {{posts.count}}</p>
-        {% for post in posts %}
-            <li><a href="{%url "post_detail" post_id=post.id %}">{{post.title}} </a>
-            ({{post.author.username}} | {{post.date_created}} | {{post.comments.count}} comments)</li>
-        {% endfor %}
-    </ul>
+    </nav>
+
 {% endblock %}

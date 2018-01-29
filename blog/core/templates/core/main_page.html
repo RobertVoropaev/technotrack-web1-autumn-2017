@@ -1,31 +1,41 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h2>Main page</h2>
+    <h1>Main page</h1>
 {% endblock %}
 
 {% block content %}
-        <h4>Last 3 posts</h4>
-        <ul>
-        {% for post in PostList %}
-            <li><a href="{%url "post_detail" post_id=post.id %}">{{post.title}} </a>
-            ({{post.author.username}} | {{post.date_created}} | {{post.comments.count}} comments)</li>
-        {% endfor %}
-        </ul>
-    <hr>
-        <h4>Last 3 users</h4>
-        <ul>
+
+    <section>
+        <h2>Last post</h2>
+            {% for post in PostList %}
+            <article class="jumbotron">
+                <h3>{{ post.title }}</h3>
+                <p class="lead"> {{ post.text }}</p>
+                <a class="btn btn-primary" href="{% url "post_detail" post_id=post.id %}"> Read</a>
+            </article>
+            {% endfor %}
+    </section>
+
+    <section>
+        <h2>Last user</h2>
         {% for user in UserList %}
-            <li><a href="{%url "user_detail" user_id=user.id %}"> {{user.username}}</a>
-            (Posts: {{user.posts.count}} | Comments: {{user.comments.count}})</li>
+            <article class="jumbotron">
+                <h3>{{ user.username }}</h3>
+                <p class="lead">Posts: {{ user.posts.count }} Comments: {{ user.comments.count }}</p>
+                <a class="btn btn-primary" href="{% url "user_detail" user_id=user.id %}"> Detail</a>
+            </article>
         {% endfor %}
-        </ul>
-    <hr>
-        <h4>Last 3 categories</h4>
-        <ul>
-        {% for category in CategoryList %}
-            <li><a href="{%url "category_detail" category_id=category.id %}">{{category.title}}</a>
-            ({{category.posts.count}} posts)</li>
-        {% endfor %}
-        </ul>
+    </section>
+
+    <section>
+        <h2>Last category</h2>
+            {% for category in CategoryList %}
+                <article class="jumbotron">
+                    <h3>{{ category.title }}</h3>
+                    <p class="lead">Posts: {{ category.posts.count }}</p>
+                   <a class="btn btn-primary" href="{% url "category_detail" category_id=category.id %}"> Detail</a>
+                </article>
+            {% endfor %}
+    </section>
 {% endblock %}

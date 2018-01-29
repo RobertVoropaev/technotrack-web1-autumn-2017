@@ -1,39 +1,108 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Blog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "base.css" %}">
 </head>
 <body>
-        {% block main_title %}
-            <h1>Blog</h1>
-        {% endblock %}
-    <hr>
-        {% block user_head %}
-            {% if user.is_authenticated %}
-                <a href="{% url "user_detail" user_id=user.id %}">{{user.username}}</a>
-                <a href="{% url "logout" %}">Logout</a>
-            {% endif %}
-            {% if user.is_anonymous %}
-                <a href="{% url "register" %}">Register</a>
-                <a href="{% url "login" %}">Login</a>
-            {% endif %}
-        {% endblock %}
-    <hr>
-        {% block main_menu %}
-            <a href="{% url "main_page" %}"> Main</a> |
-            <a href="{% url "user_all" %}"> All users</a> |
-            <a href="{% url "post_all" %}"> All posts</a> |
-            <a href="{% url "category_all" %}"> All categoryes</a> |
-        {% endblock %}
-    <hr>
-        {% block content_name %}
-        {% endblock %}
-    <hr>
-        {% block content %}
-        {% endblock %}
-    <hr>
-        {% block main_footer %}
-            <footer>Robert Voropaev, 2017</footer>
-        {% endblock %}
+    <header class="container-fluid">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark row">
+            <a class="navbar-brand" href="{% url "main_page" %}"> Blog </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "post_all" %}"> Posts</a>
+                    </li>
+
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url "user_all" %}"> Users </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "category_all" %}"> Categoryes</a>
+                    </li>
+
+                </ul>
+
+
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{% url "user_detail" user_id=user.id %}">{{user.username}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link" href="{% url "logout" %}">Logout</a>
+                        </li>
+                    {% endif %}
+
+                    {% if user.is_anonymous %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url "register" %}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url "login" %}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <nav class="col-sm-2 col-md-2 d-none d-md-block bg-light sidebar">
+
+                <ul class="nav nav-pills flex-column">
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item ">
+                            <a class="nav-link btn btn-primary" href="{% url "user_detail" user_id=user.id %}">My profile</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="{% url "user_update" user_id=user.id %}"> Update my profile </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{% url "post_create" %}">Create post</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{% url "category_create" %}">Create categories</a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <main role="main" class="col-xs-12 col-md-10 ml-sm-auto pt-3">
+                {% block content_name %}
+                {% endblock %}
+
+                {% block content %}
+                {% endblock %}
+            </main>
+
+    </div>
+    </div>
+
+    <footer class="modal-footer">
+        &copy;Robert Voropaev, 2017
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </body>
 </html>

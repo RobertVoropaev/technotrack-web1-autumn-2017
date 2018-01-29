@@ -2,27 +2,30 @@
 
 {% block content_name %}
     {% if user.username == object_user.username %}
-        <h2>My profile</h2>
+        <h1>My profile</h1>
     {% endif %}
-    <h2>{{object_user.username}}</h2>
+
 {% endblock %}
 
 {% block content %}
-        {% if user.username == object_user.username %}
-            <a href="{% url "user_update" user_id=user.id %}"> Update my profile </a>
-        {% endif %}
-        {{object_user.first_name}} {{object_user.last_name}}<br>
-        {{object_user.email}}<br>
-        {{object_user.last_login}}
-    <hr>
-        <h4>{{object_user.posts.count}} posts</h4>
+    <div class="jumbotron">
+        <h1>{{object_user.username}}</h1>
+        <ul>
+            <li>{{object_user.first_name}} {{object_user.last_name}}</li>
+            <li>{{object_user.email}}</li>
+            <li>{{object_user.last_login}}</li>
+        </ul>
+    </div>
+    <div class="jumbotron">
+        <h2>{{object_user.posts.count}} posts</h2>
         <ul>
         {% for post in object_user.posts.all %}
             <li><a href="{%url "post_detail" post_id=post.id %}">{{post.title}}</a></li>
         {% endfor %}
         </ul>
-    <hr>
-        <h4>{{object_user.comments.count}} comments</h4>
+    </div>
+    <div class="jumbotron">
+        <h2>{{object_user.comments.count}} comments</h2>
         <ul>
         {% for comment in object_user.comments.all %}
             <li><a href="{%url "post_detail" post_id=comment.author.id %}">
@@ -30,4 +33,5 @@
             <br> {{comment.text}}</li>
         {% endfor %}
         </ul>
+    </div>
 {% endblock %}

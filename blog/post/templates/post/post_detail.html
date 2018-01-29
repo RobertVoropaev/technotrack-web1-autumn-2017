@@ -1,41 +1,58 @@
 {% extends "core/base.html" %}
 
 {% block content_name %}
-    <h2>{{post.title}}</h2>
+    <h1>{{post.title}}</h1>
 {% endblock %}
 
 {% block content %}
-            <a href="{% url "user_detail" user_id=post.author.id %}"> {{post.author.username}}</a>
-            {{post.date_created}}
-            {% if post.author.username == user.username %}
-                <a href="{% url "post_update" post_id=post.id %}"> Update Post </a>
-            {% endif %}
-        <hr>
-            {{post.text}}
-        <hr>
-            {% for category in post.categories.all %}
-                <a href="{%url "category_detail" category_id=category.id %}">{{category.title}}</a>
-            {% endfor %}
-        <hr>
-            {% if user.is_authenticated %}
-            <h4>Create comments</h4>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    {{form}}
-                    <input type="submit" value="Create">
-                </form>
-            {% endif %}
 
-            {% if user.is_anonymous %}
-                <a href="{% url "login" %}"> Create comment</a>
-            {% endif %}
-            <h4>{{post.comments.count}} comments</h4>
+    {% if post.isDeleted == True %}
+        <div class="alert-warning">
+            Post is deleted
+        </div>
+    {% endif %}
+
+    <a href="{% url "user_detail" user_id=post.author.id %}"> {{post.author.username}}</a>
+
+    {{post.date_created}}
+
+    {% for category in post.categories.all %}
+        <a href="{%url "category_detail" category_id=category.id %}" class="btn btn-primary">{{category.title}}</a>
+    {% endfor %}
+
+
+
+    <div class="jumbotron">
+    {{post.text}}
+    </div>
+
+    {% if post.author.username == user.username %}
+        <a href="{% url "post_update" post_id=post.id %}" class="btn btn-primary"> Update Post </a>
+    {% endif %}
+
+    <aside>
+        <h2>Comments</h2>
+        {% if user.is_authenticated %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form}}
+                <button class="btn btn-primary" type="submit">Create</button>
+            </form>
+        {% else %}
+            <a href="{% url "login" %}"> Create comment</a>
+        {% endif %}
+
+        <div class="jumbotron">
+            <h3>{{post.comments.count}} comments</h3>
             <ul>
             {% for comment in post.comments.all %}
                 <li><a href="{%url "user_detail" user_id=comment.author.id %}">{{comment.author.username}}</a> | {{comment.date_created}}
                 <br> {{comment.text}}</li>
             {% endfor %}
             </ul>
+        </div>
+
+    </aside>
 {% endblock %}
 
 
